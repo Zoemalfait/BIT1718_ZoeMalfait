@@ -18,13 +18,24 @@ mysql> SELECT gene_name, count(transcript_id) FROM transcript JOIN gene ON gene.
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
-mysql> SELECT count(gene_id), chromosome FROM gene WHERE description LIKE "%cancer%" GROUP BY chromosome ORDER BY count(gene_id) DESC LIMIT 1 OFFSET 1;
+SELECT count(gene_id), chromosome FROM gene WHERE description LIKE "%cancer%" GROUP BY chromosome ORDER BY count(gene_id) DESC LIMIT 1 OFFSET 1;
 +----------------+------------+
 | count(gene_id) | chromosome |
 +----------------+------------+
 |              5 | 9          |
 +----------------+------------+
 1 row in set (0.03 sec)
+
+SELECT chromosome, count(distinct(exon_id)) as exoncount FROM gene JOIN transcript ON transcript.gene_id=gene.gene_id JOIN exon_transcript ON transcript.transcript_id=exon_transcript.transcript_id WHERE chromosome="9";
++------------+-----------+
+| chromosome | exoncount |
++------------+-----------+
+| 9          |     24097 |
++------------+-----------+
+1 row in set (0.07 sec)
+
+Chromosoom 9 draagt het tweede meest kanker-gerelateerde genen, dit chromosoom heeft 24097 exonen. 
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 mysql> SELECT count(*) FROM exon;
