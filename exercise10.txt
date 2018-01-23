@@ -1,0 +1,47 @@
+SELECT gene_name, (seq_region_end-seq_region_start+1) as length FROM gene ORDER BY length LIMIT 1;
++-----------+--------+
+| gene_name | length |
++-----------+--------+
+| TRDD1     |      8 |
++-----------+--------+
+1 row in set (0.02 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT gene_name, count(transcript_id) FROM transcript JOIN gene ON gene.gene_id=transcript.gene_id GROUP BY gene_name ORDERnt(transcript_id) DESC LIMIT 1;
++-----------+----------------------+
+| gene_name | count(transcript_id) |
++-----------+----------------------+
+| U6        |                 1329 |
++-----------+----------------------+
+1 row in set (0.19 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> SELECT count(gene_id), chromosome FROM gene WHERE description LIKE "%cancer%" GROUP BY chromosome ORDER BY count(gene_id) DESC LIMIT 1 OFFSET 1;
++----------------+------------+
+| count(gene_id) | chromosome |
++----------------+------------+
+|              5 | 9          |
++----------------+------------+
+1 row in set (0.03 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+mysql> SELECT count(*) FROM exon;
++----------+
+| count(*) |
++----------+
+|   642590 |
++----------+
+1 row in set (0.10 sec)
+
+mysql> SELECT count(*) FROM exon_transcript;
++----------+
+| count(*) |
++----------+
+|  1178393 |
++----------+
+1 row in set (0.17 sec)
+
+Een exon kan verschillende transcripts hebben. Sommige exons komen dus meerdere malen voor in de exon_transcript tabel. 
+
