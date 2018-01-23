@@ -1,0 +1,38 @@
+curl http://rest.ensembl.org/variation/mouse/rs4224828 -H 'Content-type:text/xml'
+<opt>
+  <data name="rs4224828" MAF="" ambiguity="Y" ancestral_allele="" minor_allele="" most_severe_consequence="3_prime_UTR_variant" source="Variants (including SNPs and indels) imported from dbSNP" var_class="SNP">
+    <evidence>Multiple_observations</evidence>
+    <evidence>Frequency</evidence>
+    <mappings allele_string="T/C" assembly_name="GRCm38" coord_system="chromosome" end="136443949" location="4:136443949-136443949" seq_region_name="4" start="136443949" strand="1" />
+  </data>
+</opt>
+
+ANTWOORD:	De mapping-locatie is "4:136443949-136443949" (chromosome 4 van positie 136443949 tot positie 136443949)
+				Stappen:
+					info over variatie rs4224828 in de muis opzoeken en dan manueel de locatie bekijken in de verkregen data. 
+	
+	
+-----------------------------------------------------------------------------------------------------------------------------------
+
+STAP1:
+
+curl 'http://rest.ensembl.org/lookup/symbol/human/Notch1' -H 'Content-type:text/xml'
+<opt>
+  <data id="ENSG00000148400" assembly_name="GRCh38" biotype="protein_coding" db_type="core" description="notch 1 [Source:HGNC Symbol;Acc:HGNC:7881]" display_name="NOTCH1" end="136545862" logic_name="ensembl_havana_gene" object_type="Gene" seq_region_name="9" source="ensembl_havana" species="human" start="136494444" strand="-1" version="9" />
+</opt>
+
+id opzoeken: id="ENSG00000148400"
+
+STAP2:
+
+curl 'http://rest.ensembl.org/sequence/id/ENSG00000148400?type=genomic;end=100' -H 'Content-type:text/x-fasta'
+>ENSG00000148400 chromosome:GRCh38:9:136545763:136545862:-1
+GCGCGTGTGCGTCCCAGCCCCGCCGGCCAGCGCAGGAGGCCGCCGCCCGGGCGCAGAGGG
+CAGCCGGTGGGGAGGCATGCCGCCGCTCCTGGCGCCCCTG
+
+Sequence opzoeken en enkel de éérste 100 bp opvragen. 
+
+ANTWOORD: 
+		>ENSG00000148400 chromosome:GRCh38:9:136545763:136545862:-1
+		GCGCGTGTGCGTCCCAGCCCCGCCGGCCAGCGCAGGAGGCCGCCGCCCGGGCGCAGAGGG
+		CAGCCGGTGGGGAGGCATGCCGCCGCTCCTGGCGCCCCTG
