@@ -1,0 +1,24 @@
+UNF	projects(PersonNelNumber, Name, BirthDate, LabCode, LabName, ResearchCode, ResearchDescription, ResearchSupervisor)
+
+	--> UNF beval alle gegevens in één entiteit
+	
+1NF	projects(PERSONNELNUMBER, Name, Birthdate, LABCODE, LabName)
+		research(RESEARCHCODE, ResearchDescription, ResearchSupervisor)
+		
+	(kandidaat sleutels in uppercase)
+	--> 1NF mag geen reapeating field bevatten, dus deze worden appart gezet. De attributen moeten atomair zijn en constant in de tijd en dit was al het geval. 
+	
+2NF	personel(PERSONNELNUMBER, Name, Birthdate)
+		lab(LABCODE, LabName)
+		research(RESEARCHCODE, ResearchDescription, ResearchSupervisor)
+		
+	(primary key's in uppercase)
+	--> alle niet sleutel attributen moeten volledig afhankelijk zijn van de primaire sleutel
+	
+3NF	personel(PERSONNELNUMBER, Name)
+		birthdate(PERSONNELNUMBER, BirthDate)
+		lab(LABCODE, LabName)
+		research(RESEARCHCODE, ResearchDescription, ResearchSupervisor, labcode, personnelnumber)
+		
+	(primary key's in uppercase)
+	--> Alle niet sleutel attributen mogen niet afhangen van een niet sleutel. De geboortedatum en naam hangen samen, dus deze zijn nu opgesplits. De ResearchDescription en de ResearchSupervisor staan los van 			 elkaar, maar hangen wel beiden samen met de ResearchCode, dus die staan samen. 
