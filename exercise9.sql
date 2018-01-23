@@ -26,6 +26,25 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `exercise9`.`Mutations`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `exercise9`.`Mutations` (
+  `idMutation` INT NOT NULL,
+  `idGene` INT NULL,
+  `MutStart` INT NULL,
+  `MutStop` INT NULL,
+  `MutChrom` ENUM('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 'X', 'Y') NULL,
+  PRIMARY KEY (`idMutation`),
+  INDEX `id_Gene_idx` (`idGene` ASC),
+  CONSTRAINT `id_Gene`
+    FOREIGN KEY (`idGene`)
+    REFERENCES `exercise9`.`Gene` (`idGene`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `exercise9`.`Syndrome`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `exercise9`.`Syndrome` (
@@ -56,26 +75,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `exercise9`.`Mutations`
+-- Table `exercise9`.`patientmutations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `exercise9`.`Mutations` (
-  `idMutation` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `exercise9`.`patientmutations` (
+  `idpatientmutations` INT NOT NULL,
+  `idMutation` INT NULL,
   `idPatient` INT NULL,
-  `idGene` INT NULL,
-  `MutStart` INT NULL,
-  `MutStop` INT NULL,
-  `MutChrom` ENUM('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 'X', 'Y') NULL,
-  PRIMARY KEY (`idMutation`),
-  INDEX `id_Gene_idx` (`idGene` ASC),
-  INDEX `id_Patient_idx` (`idPatient` ASC),
-  CONSTRAINT `id_Gene`
-    FOREIGN KEY (`idGene`)
-    REFERENCES `exercise9`.`Gene` (`idGene`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `id_Patient`
+  PRIMARY KEY (`idpatientmutations`),
+  INDEX `idPatient_idx` (`idPatient` ASC),
+  INDEX `idMutation_idx` (`idMutation` ASC),
+  CONSTRAINT `idPatient`
     FOREIGN KEY (`idPatient`)
     REFERENCES `exercise9`.`Patient` (`idPatient`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idMutation`
+    FOREIGN KEY (`idMutation`)
+    REFERENCES `exercise9`.`Mutations` (`idMutation`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
