@@ -1,0 +1,21 @@
+
+db.bioinf_mongo_examen.find({"method_of_admission":"TABLET;BUCCAL, SUBLINGUAL"},{"drug":1})
+{ "_id" : ObjectId("588878f14ffaac2610855b5e"), "drug" : "DEMULEN 1/35-28" }
+
+--> 1 medicijn genaamd DEMULEN 1/35-28
+------------------------------------------------------------------------------------------------------------
+
+db.bioinf_mongo_examen.count({"percentage_of_side_effects":{$gt:12}})
+12
+
+-----------------------------------------------------------------------------------------------------
+
+db.bioinf_mongo_examen.aggregate([{$group: {_id:{company:"$company"}, avg: {$avg:"$percentage_of_side_effects"}}},{$sort:{avg:-1}},{$match:{avg:{$gt:10}}}])
+{ "_id" : { "company" : "Galderma Laboratories, L.P." }, "avg" : 11.5 }
+{ "_id" : { "company" : "Watson Pharmaceuticals, Inc." }, "avg" : 10.65 }
+{ "_id" : { "company" : "Durata Therapeutics, Inc." }, "avg" : 10.5 }
+
+---------------------------------------------------------------------------------------------------
+
+> db.bioinf_mongo_examen.aggregate([{$group: {_id:{company:"$company"}, min: {$min:"$percentage_of_side_effects"}, max: {$max:"$percentage_of_side_effects"}}}, {$match:{max:{$ne:min}}}])
+
